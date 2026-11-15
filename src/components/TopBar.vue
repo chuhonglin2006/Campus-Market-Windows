@@ -9,7 +9,6 @@ const router = useRouter()
 const userStore = useUserStore()
 const marketStore = useMarketStore()
 const { isNight, toggle } = useTheme()
-const isApp = navigator.userAgent.includes('Electron')
 
 function goPublish() {
   if (!userStore.currentUser) {
@@ -52,7 +51,6 @@ function goProfile() {
       </div>
 
       <div class="nav-actions">
-       <button v-if="!isApp" class="btn btn-ghost" @click="router.push({ name: 'download' })">下载 App</button>
         <button class="btn btn-ghost" @click="goPublish">发布闲置</button>
 
         <button

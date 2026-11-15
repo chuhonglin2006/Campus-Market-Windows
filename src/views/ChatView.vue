@@ -377,16 +377,27 @@ function getToken() {
 function getWebSocketUrl() {
   const token = getToken()
 
-  if (!token) {
+  if (!token || !conversationId.value) {
     return null
   }
 
-  const protocol =
-    window.location.protocol === 'https:'
-      ? 'wss:'
-      : 'ws:'
+  // Windows Tauri 的 window.location.host 是 tauri.localhost，
+  // WebSocket 必须使用配置的后端 API 域名。
+  const apiBase = import.meta.env.VITE_API_BASE_URL || '/api'
+  let apiUrl
 
-  return `${protocol}//${window.location.host}/api/chat/ws/${conversationId.value}`
+  try {
+    apiUrl = new URL(apiBase, window.location.href)
+  } catch (error) {
+    console.error('API 地址无效，无法创建 WebSocket:', error)
+    return null
+  }
+
+  const wsProtocol = apiUrl.protocol === 'https:' ? 'wss:' : 'ws:'
+  const apiPath = apiUrl.pathname.replace(/\/+$/, '')
+  const wsPath = `${apiPath}/chat/ws/${encodeURIComponent(conversationId.value)}`
+
+  return `${wsProtocol}//${apiUrl.host}${wsPath}`
 }
 
 /*
