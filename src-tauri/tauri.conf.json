@@ -14,8 +14,8 @@
     "windows": [
       {
         "title": "校园二手交易平台",
-        "width": 800,
-        "height": 600,
+        "width": 1200,
+        "height": 800,
         "resizable": true,
         "fullscreen": false
       }

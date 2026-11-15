@@ -3,6 +3,7 @@ import { ref, watch } from 'vue'
 import { ICON_HEART } from '../utils/icons'
 import { formatDateTime, formatPrice } from '../utils/format'
 import CategoryIcon from './CategoryIcon.vue'
+import { getImageUrl } from '../utils/image.js'
 
 const props = defineProps({
   product: {
@@ -50,7 +51,7 @@ function onOpen() {
     <div class="card-media">
       <img
         v-if="product.images && product.images.length > 0 && !imageError"
-        :src="product.images[0]"
+        :src="getImageUrl(product.images[0])"
         :alt="product.name"
         class="product-image"
         loading="lazy"

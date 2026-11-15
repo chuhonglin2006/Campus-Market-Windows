@@ -11,6 +11,7 @@ import { productsApi } from '../api/products'
 import { reportsApi } from '../api/reports'
 import { formatDateTime } from '../utils/format'
 import { getApiErrorMessage } from '../utils/apiError'
+import { getImageUrl } from '../utils/image.js'
 
 const props = defineProps({
   id: {
@@ -1042,7 +1043,7 @@ function openSeller() {
               currentProductImage &&
               !imageError
             "
-            :src="currentProductImage"
+            :src="getImageUrl(currentProductImage)"
             :alt="product.name"
             class="detail-image"
             @error="onImageError"
@@ -1123,7 +1124,7 @@ function openSeller() {
             "
           >
             <img
-              :src="image"
+              :src="getImageUrl(image)"
               :alt="
                 `${product.name} 图片 ${
                   index + 1
